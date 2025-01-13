@@ -11,7 +11,7 @@ const userStore = useUserStore();
 
 const logout = () => {
     alert("Logging out!")
-    router.push('/login')
+    router.push('/')
 }
 
 </script>

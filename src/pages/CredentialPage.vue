@@ -34,7 +34,7 @@ const createUserJson = async () => {
 
         try {
             await axios.post('http://localhost:3000/users', newUser);
-            router.push('/login');
+            router.push('/');
         } catch (error) {
             console.error('Error creating user:', error);
         }

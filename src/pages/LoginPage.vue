@@ -61,7 +61,8 @@ const validEnterLogin = async () => {
                 <CustomButton title="Enter" :toggle="buttonToggle" invalid-button="bg-gray-500"
                     valid-button="bg-green-100" />
             </form>
-            <CustomButton title="Register" :toggle="true" valid-button="bg-red-100" :onClick="() => router.push('/')" />
+            <CustomButton title="Register" :toggle="true" valid-button="bg-red-100"
+                :onClick="() => router.push('/register')" />
 
         </Panel>
     </div>
