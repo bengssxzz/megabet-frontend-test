@@ -13,7 +13,6 @@ const router = useRouter();
 const buttonToggle = ref(false);
 
 const username = ref('');
-const phone = ref('');
 const password = ref('');
 const password2 = ref('');
 
@@ -44,6 +43,7 @@ const createUserJson = async () => {
 const checkExistingUser = async (username) => {
     try {
         const response = await axios.get(`http://localhost:3000/users?username=${username}`);
+
         return response.data.length > 0;
     } catch (error) {
         console.error('Error checking user:', error);
