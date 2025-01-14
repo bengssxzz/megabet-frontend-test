@@ -1,10 +1,11 @@
 <script setup>
 import { ref } from "vue";
-import Panel from '@/components/Panel.vue';
-import CustomButton from '@/components/Button.vue'
-
+import axios from 'axios';
 import { useRouter } from "vue-router";
 import { useUserStore } from '@/stores/userStore';
+
+import Panel from '@/components/Panel.vue';
+import CustomButton from '@/components/Button.vue'
 
 const userStore = useUserStore();
 const router = useRouter();
@@ -36,13 +37,29 @@ const insertOTP = (e) => {
     enteredOTP.value = e.target.value;
 }
 
-const makeOTP = () => {
-    generatedOTP.value = Math.floor(100000 + Math.random() * 900000).toString();
-    alert(`Your OTP is ${generatedOTP.value}`);
+const makeOTP = async () => {
+    // generatedOTP.value = Math.floor(100000 + Math.random() * 900000).toString();
+    // alert(`Your OTP is ${generatedOTP.value}`);
+
+    try {
+        // const response = await axios.get('http://www.randomnumberapi.com/api/v1.0/random?min=100000&max=999999');
+        const response = await axios.get('/api/api/v1.0/random?min=100000&max=999999');
+
+        if (response.data && response.data.length > 0) {
+            generatedOTP.value = response.data[0];
+
+            console.log("OTP: " + response.data[0]);
+            alert(`Your OTP is ${generatedOTP.value}`);
+        }
+    } catch (error) {
+        console.error('Error generating OTP:', error);
+    }
 };
 
 const confirmOTP = () => {
-    if (enteredOTP.value === generatedOTP.value) {
+    console.log("InputOTP:", enteredOTP.value, "Type:", typeof enteredOTP.value);
+    console.log("GenOTP:", generatedOTP.value, "Type:", typeof generatedOTP.value);
+    if (String(enteredOTP.value) === String(generatedOTP.value)) {
         userStore.setUser('', userNumber.value);
         router.push('/set-credential');
     } else {
